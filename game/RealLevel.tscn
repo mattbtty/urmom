@@ -1,21 +1,32 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+
+[sub_resource type="SegmentShape2D" id=3]
+a = Vector2( 800, 0 )
+b = Vector2( 800, 122 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 400, 10 )
 
-[sub_resource type="CapsuleShape2D" id=4]
-
 [node name="Level" type="Node2D"]
 
-[node name="Floor" type="Area2D" parent="."]
-collision_mask = 2
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( -213, -153 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Finish Line" type="Area2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Finish Line"]
+shape = SubResource( 3 )
+
+[node name="Floor" type="RigidBody2D" parent="."]
+mode = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
-position = Vector2( 400, 300 )
+position = Vector2( 403, 134 )
 shape = SubResource( 2 )
 
-[node name="Player" type="KinematicBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-position = Vector2( 247, 253 )
-shape = SubResource( 4 )
+[connection signal="body_entered" from="Finish Line" to="Player" method="_on_Finish_Line_body_entered"]
