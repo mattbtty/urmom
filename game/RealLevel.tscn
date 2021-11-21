@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 400, 10 )
+
+[sub_resource type="CapsuleShape2D" id=4]
+
+[node name="Level" type="Node2D"]
+
+[node name="Floor" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2( 400, 300 )
+shape = SubResource( 2 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 247, 253 )
+shape = SubResource( 4 )
