@@ -7,6 +7,7 @@ extends KinematicBody2D
 onready var gravity = ProjectSettings.get("physics/2d/default_gravity")
 onready var velocity = Vector2()
 onready var jumps = 1
+signal finished
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -45,4 +46,5 @@ func _physics_process(delta):
 
 
 func _on_Finish_Line_body_entered(body):
+	emit_signal("finished")
 	print("we won")
