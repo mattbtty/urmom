@@ -6,6 +6,7 @@ extends KinematicBody2D
 # var b = "text"
 onready var gravity = ProjectSettings.get("physics/2d/default_gravity")
 onready var velocity = Vector2()
+onready var jumps = 1
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -18,7 +19,7 @@ func _ready():
 
 func _physics_process(delta):
 	
-	velocity.y += gravity * delta
+	velocity.y += gravity * delta * 7
 	
 	if (Input.is_action_pressed("ui_right")):
 		velocity.x = 200
@@ -27,15 +28,19 @@ func _physics_process(delta):
 	else:
 		velocity.x = 0
 		
-	if (Input.is_action_just_pressed("ui_up")):
-		velocity.y = -300
+	if (Input.is_action_just_pressed("ui_up") && jumps > 0):
+		velocity.y = -400
+		print(jumps)
+		jumps -= 1
+	
+	if (self.is_on_floor() && !Input.is_action_just_pressed("ui_up")):
+		jumps = 1
+		print(self.is_on_floor())
 	
 	var _slide = move_and_slide(velocity, Vector2.UP)
 	
 	for i in get_slide_count():
 		var collision = get_slide_collision(i)
-		if (collision != null):
-			print("Collided with: ", collision.collider.name)
 	
 
 
